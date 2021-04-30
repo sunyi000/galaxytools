@@ -7,14 +7,17 @@
     </requirements>
     <command detect_errors="exit_code">
         <![CDATA[
-            python '$__tool_directory__/feature-extraction.py' -i '$org_img' -l '$labelled_img'
+            ln -s '${org_img}' org_img.${org_img.ext} &&
+            ln -s '${labelled_img}' labelled_img.${labelled_img.ext} &&
+            python '$__tool_directory__/feature-extraction.py' -i 'org_img.${org_img.ext}' -l 'labelled_img.${labelled_img.ext}'
             ]]>
     </command>
+
     <inputs>       
-        <param name="org_image" type="data" format="data" label="Select the original image">           
+        <param name="org_image" type="data" format="tiff" label="Select the original image">           
         </param>
         
-        <param name="labelled_img" type="data" format="data" label="Select the labelled image" >
+        <param name="labelled_img" type="data" format="tiff" label="Select the labelled image" >
 
         </param>
     </inputs>
@@ -23,8 +26,8 @@
     </outputs>
     <tests>
         <test>
-            <param name="org_image" value="orig-img.tiff"/>
-            <param name="labeled_img" value="labelled_img.tiff"/>
+            <param name="org_img" value="orig-img.tiff"/>
+            <param name="labelled_img" value="labelled_img.tiff"/>
 
             <output name="output_features" ftype="txt" file="features.csv" lines_diff="0"/>
         </test>       

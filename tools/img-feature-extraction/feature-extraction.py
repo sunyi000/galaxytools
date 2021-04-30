@@ -4,8 +4,11 @@ from skimage import util,measure
 from skimage.segmentation import clear_border
 import numpy as np
 import pandas as pd
+import argparse
 
 def get_properties(regionprops):
+    supported = []
+    unsupported =[]
     for prop in regionprops[0]:
         try:
             regionprops[0][prop]
@@ -25,13 +28,13 @@ def extract_features(org_data,lbl_data):
     output_vals=[]
 
     for r in regionprops:
-    msg = ""
-    input_vals.append(r.label)
-    if 1 in r.image.shape:
-        print(f"object with label {r.label} has singleton dimension and cannot support convex hull in 3d")
-        output_vals.append(0)
-    else:
-        output_vals.append(r.label)
+        msg = ""
+        input_vals.append(r.label)
+        if 1 in r.image.shape:
+            print(f"object with label {r.label} has singleton dimension and cannot support convex hull in 3d")
+            output_vals.append(0)
+        else:
+            output_vals.append(r.label)
 
     lbl_data = util.map_array(lbl_data, input_vals=np.array(input_vals), output_vals=np.array(output_vals))
 
