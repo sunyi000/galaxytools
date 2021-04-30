@@ -1,0 +1,54 @@
+<tool id="img_feature_extraction" name="Extract features from image" version="0.1.0" python_template_version="3.9">
+    <description>extract features on images</description>
+   
+    <requirements>
+        <requirement type="package" version="3.9">python</requirement>
+        <requirement type="package" version="0.17.2">scikit-image</requirement>
+    </requirements>
+    <command detect_errors="exit_code">
+        <![CDATA[
+            python '$__tool_directory__/feature-extraction.py' -i '$org_img' -l '$labelled_img'
+            ]]>
+    </command>
+    <inputs>       
+        <param name="org_image" type="data" format="data" label="Select the original image">           
+        </param>
+        
+        <param name="labelled_img" type="data" format="data" label="Select the labelled image" >
+
+        </param>
+    </inputs>
+    <outputs>
+         <data name="output_features" from_work_dir="features.csv" format="txt"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="org_image" value="orig-img.tiff"/>
+            <param name="labeled_img" value="labelled_img.tiff"/>
+
+            <output name="output_features" ftype="txt" file="features.csv" lines_diff="0"/>
+        </test>       
+    </tests>
+    <help>
+        <![CDATA[
+
+            .. class:: infomark
+
+            **What it does**
+
+            This module takes in original image and the labelled image as input, and produces a CSV file of features
+            @COMMON_HELP@
+            ]]>
+    </help>
+    <citations>
+        <citation type="bibtex">@ARTICLE{footprint,
+            author = {},
+            title = {To submit},
+            journal = {},
+            year = {},
+            volume = {},
+            pages = {}
+            }
+        </citation>
+    </citations>
+</tool>
